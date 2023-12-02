@@ -11,15 +11,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument("-input", "-i", help="Directory to monitor for events", metavar="I", required=True)
 parser.add_argument("-output", "-o", help="Backup for directory.", metavar="O", required=True)
-
-
 args = parser.parse_args()
-print(args.input)
-print(args.output)
-
-
-# dir_path = Path(r"E:\Playstation\ePSXe")
-# backup_path = Path(r"E:\backup")
 
 dir_path = Path(args.input)
 backup_path = Path(args.output)
@@ -30,8 +22,6 @@ def create_dir(path:str) -> None:
 
 def callback(changes):
     for c in changes:
-        print(c)
-
         data = list(c)
         path_to_file = data[1]
         file_event = data[0].name
@@ -47,6 +37,5 @@ def callback(changes):
             print("File copied from %s --> %s"  % (path_to_file, dst))
 
 if __name__ == "__main__":
-    print("running")
     for f in run_process(dir_path, target=None, callback=callback):
         pass
