@@ -4,21 +4,25 @@ import os
 import shutil
 import argparse
 
-# parser = argparse.ArgumentParser(
-#     prog="Data Backupper",
-#     description="File monitor and data backupper",
-#     epilog="Bottom text")
+parser = argparse.ArgumentParser(
+    prog="Data Backupper",
+    description="File monitor and data backupper",
+    epilog="Bottom text")
 
-# parser.add_argument("-input", "-i", help="Directory to monitor for events", metavar="input", required=True)
-# parser.add_argument("-output", "-o", help="Backup for directory.")
+parser.add_argument("-input", "-i", help="Directory to monitor for events", metavar="I", required=True)
+parser.add_argument("-output", "-o", help="Backup for directory.", metavar="O", required=True)
 
 
-# args = parser.parse_args()
-# print(args.input)
-# print(args.output)
+args = parser.parse_args()
+print(args.input)
+print(args.output)
 
-dir_path = Path(r"E:\Playstation\ePSXe")
-backup_path = Path(r"E:\backup")
+
+# dir_path = Path(r"E:\Playstation\ePSXe")
+# backup_path = Path(r"E:\backup")
+
+dir_path = Path(args.input)
+backup_path = Path(args.output)
 
 def create_dir(path:str) -> None:
     if not os.path.isdir(path):
