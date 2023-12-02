@@ -37,5 +37,5 @@ def callback(changes):
             print("File copied from %s --> %s"  % (path_to_file, dst))
 
 if __name__ == "__main__":
-    for f in run_process(dir_path, target=None, callback=callback):
-        pass
+    run_process(dir_path, target=None, callback=callback)
+        
