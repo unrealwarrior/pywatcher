@@ -3,6 +3,8 @@ from pathlib import Path
 import os
 import shutil
 import argparse
+import sys
+
 
 parser = argparse.ArgumentParser(
     prog="Data Backupper",
@@ -32,9 +34,18 @@ def callback(changes):
         relative_path = os.path.relpath(path_to_file, dir_path)
         dst = Path(os.path.join(backup_parent_dir, relative_path)).parent
         create_dir(dst)
-        if file_event == "modified" or file_event == "added":
-            shutil.copy2(path_to_file, os.path.join(dst, Path(path_to_file).name))
-            print("File copied from %s --> %s"  % (path_to_file, dst))
+        if Path(path_to_file).suffix in [".tmp", ".temp"]:
+            # temporary file, just ignore
+            return
+        else:
+            if file_event == "modified" or file_event == "added":
+                try:
+                    shutil.copy2(path_to_file, os.path.join(dst, Path(path_to_file).name))
+                    print("File copied from %s --> %s"  % (path_to_file, dst))
+                except FileNotFoundError:
+                    print("file must be deleted")
+                except PermissionError:
+                    print("You do not have permission to access file / directory.")
 
 if __name__ == "__main__":
     run_process(dir_path, target=None, callback=callback)
